@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:icecore="http://www.icefaces.org/icefaces/core"
+	xmlns:ace="http://www.icefaces.org/icefaces/components"
+	xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+<!-- Agrega un nuevo proyecto
+	Necesario: Nombre del proyecto y
+	archivo que se va a subir
+	Crea una tabla de escenas para poder 
+	introcucir las definiciones de cada una
+ -->
+<h:body>
+
+	<ui:composition template="/template/common/commonLayout.xhtml">
+	<ui:define name="header">
+		<ui:include src="/content/project/headerIn.xhtml"></ui:include>
+	</ui:define>
+		<ui:define name="content">
+			<ice:form id="cpform">
+
+				<div class="wrapper col5">
+					<div id="container">
+						<div id="contentIn">
+							<ice:outputText>
+								<ice:outputText><h2>Crear proyecto</h2></ice:outputText>
+							</ice:outputText>
+							<ice:panelGroup id="panelcp">
+
+								<ice:panelGroup id="panelfiles">
+									<ice:panelGrid columns="3">
+										<ice:outputLabel value="Nombre: " />
+										<ice:inputText id="projectName" value="#{projectMB.proyecto.name}"  partialSubmit="true" required="true" size="40"  maxlength="40"></ice:inputText>
+										<ice:message  id="projectNameError" for="projectName" style="color:red;"/>
+										<ice:outputLabel value="Subir Archivo (zip): " />
+										<ace:fileEntry id="filentrycp" useOriginalFilename="true"
+											absolutePath="/home/lucy/s"
+											fileEntryListener="#{projectMB.fileListener}">
+										</ace:fileEntry>
+										
+									</ice:panelGrid>
+									<h:commandButton id="submit" type="submit" value="Descomprimir" style="float:right" />
+									<br/>
+								</ice:panelGroup>
+								<br/>
+								<ice:panelGroup id="paneldtfiles"
+									rendered="#{projectMB.renderTempScenes}">
+
+									<ice:panelDivider orientation="vertical" id="divider"
+										dividerPosition="50">
+
+										<f:facet name="first">
+											<ice:dataTable id="dtScenefiles"
+												value="#{projectMB.tempScenes}" var="scene"
+												binding="#{projectMB.scenesDT}">
+
+												<ice:column id="Archivo">
+													<f:facet name="header">
+														<ice:outputLabel>Archivo</ice:outputLabel>
+													</f:facet>
+							#{scene.fileName}
+						</ice:column>
+												<ice:column id="resolusion">
+													<f:facet name="header">
+														<ice:outputLabel>Resolusión</ice:outputLabel>
+													</f:facet>
+													<ice:selectOneMenu value="#{scene.resolution}">
+
+														<f:selectItems var="resol" itemValue="#{resol.id}"
+															id="resolutionsids" value="#{projectMB.allResolutions}"
+															itemLabel="#{resol.resolution}" />
+
+													</ice:selectOneMenu>
+												</ice:column>
+												<ice:column id="campos">
+													<f:facet name="header">
+														<ice:outputLabel>Posición Camara</ice:outputLabel>
+													</f:facet>
+													<ice:inputText id="camPosID" value="#{scene.cameraPos}" />
+												</ice:column>
+
+												<ice:column id="nSalida">
+													<f:facet name="header">
+														<ice:outputLabel>Nombre salida</ice:outputLabel>
+													</f:facet>
+													<ice:inputText id="sceneNameID" value="#{scene.name}" />
+												</ice:column>
+
+											</ice:dataTable>
+										</f:facet>
+										<f:facet name="second">
+											<ice:dataTable id="dtProjectfiles"
+												value="#{projectMB.proyecto.files}" var="pFile">
+
+												<ice:column id="pFilec">
+													<f:facet name="header">
+														<ice:outputLabel>Archivo</ice:outputLabel>
+													</f:facet>
+													<ice:outputText value="#{pFile.name}" />
+												</ice:column>
+
+											</ice:dataTable>
+										</f:facet>
+									</ice:panelDivider>
+
+								</ice:panelGroup>
+
+								<ice:commandButton id="guardarCommand" rendered="#{projectMB.renderTempScenes}" partialSubmit="true" type="submit" value="Guardar"
+									actionListener="#{projectMB.saveProject}" style="float:right"/>
+							</ice:panelGroup>
+
+						</div>
+						<div id="column">
+							<div class="holder">
+								<h2>RENDER FARM</h2>
+								<ul id="latestnews">
+									<ice:outputText>Estado</ice:outputText>
+								</ul>
+								x
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+
+
+			</ice:form>
+
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

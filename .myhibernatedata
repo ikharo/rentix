@@ -1,0 +1,24 @@
+#MyEclipse Hibernate Properties
+#Sun Jul 01 14:32:29 CDT 2012
+sessionFactoryName=rentix.dao.HibernateSessionFactory
+genBasicCompId=false
+profile=
+daoSFId=sessionFactory
+version=3.3
+jndiPath=
+detectM2M=true
+reStrategyClass=
+detectO2O=true
+springDaoFile=WebRoot/WEB-INF/applicationContext.xml
+useJavaTypes=true
+keyGenerator=increment
+libInstallFolder=WebRoot/WEB-INF/lib
+addLibs2Project=true
+genVersionTag=false
+sessionFactoryId=sessionFactory
+basePersistenceClass=
+genAnnotations=false
+reSettingsFile=
+configFile=/rentix/WebRoot/WEB-INF/applicationContext.xml
+createConfigFile=false
+addLibs2Classpath=true

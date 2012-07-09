@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="rentix"
+  id="myeclipse.1341170514240"
+  context-root="/rentix"
+  j2ee-spec="5.0"
+  archive="rentix.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component">
+    
+  
+  <!-- Da de alta un usuario, se necesita -->
+	<h:body>
+	
+		<ui:composition template="/template/common/commonLayout.xhtml">
+			<ui:define name="content">
+		        <ice:form>
+					<div class="wrapper col5">
+				<div id="container">
+					<div id="contentIn">
+						<ice:outputText><h2>Registro de usuario</h2></ice:outputText>
+						<ice:panelGroup id="panelfiles">
+							<ice:panelGrid columns="2">
+							<ice:outputLabel style="size: 20" value="Nombre de usuario: " />
+							<ice:inputText  value="#{RegisterMB.users.username}" size="40"  maxlength="40"></ice:inputText>
+							<ice:outputLabel value="Correo: " />
+							<ice:inputText   value="#{RegisterMB.users.mail}" size="40"  maxlength="40"> </ice:inputText>
+							<ice:outputLabel value="Contraseña: " />
+							<ice:inputText value="#{RegisterMB.users.password}" size="40"  maxlength="40"></ice:inputText>
+							<ice:outputLabel value="Confirmar contraseña: " />
+							<ice:inputText value="#{RegisterMB.passwordConfirm}" size="40"  maxlength="40"></ice:inputText>
+							<ice:outputLabel value="Captcha: " /> 
+							<ice:outputLabel value="IMGEN " />
+							<ice:outputLabel value="Introducir las letras de arriba: " />
+							<ice:inputText value="#{RegisterMB.captchaLetters}" size="10"  maxlength="10"></ice:inputText>
+							<!-- CONFIRMAR -->
+							<h:commandButton id="submit" type="submit" value="Registrar" action="#{RegisterMB.saveUser}" style="float:right"/>
+							</ice:panelGrid>
+						</ice:panelGroup>
+						
+					</div>
+					<div id="column">
+						<div class="holder">
+							<h2>FOTO</h2>
+							<ul id="latestnews"><ice:outputText>Estado</ice:outputText></ul>x
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		        </ice:form >
+		    </ui:define>
+		</ui:composition>
+	</h:body>
+</html>

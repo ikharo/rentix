@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	    http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+    
+    	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="org.h2.Driver"></property>
+		<property name="url"
+			value="jdbc:h2:file:/home/lucy/server/Base/tesis;AUTO_SERVER=TRUE">
+		</property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<!-- LISTA DE ENTIDADES-->
+  		<property name="annotatedClasses">
+	    	<list>
+	       		<value>com.rentix.beans.Acceleration</value>
+	       		<value>com.rentix.beans.Authorities</value>
+	       		<value>com.rentix.beans.File</value>
+	       		<value>com.rentix.beans.Material</value>
+	       		<value>com.rentix.beans.Obj</value>
+	       		<value>com.rentix.beans.Proyecto</value>
+	       		<value>com.rentix.beans.Resolution</value>
+	       		<value>com.rentix.beans.Scene</value>
+				<value>com.rentix.beans.Status</value>
+				<value>com.rentix.beans.Users</value>								
+	     	</list>
+   		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.H2Dialect
+				</prop>
+			</props>
+		</property>
+	</bean>
+             
+	<security:http auto-config="true">
+		<security:intercept-url pattern='/login/Login.xhtml' />
+		<security:intercept-url pattern="/content/project/*" access="IS_AUTHENTICATED_REMEMBERED" />
+		<security:form-login login-page="/login/Login.xhtml" 
+			authentication-failure-url="/login/Login.xhtml?login_error=true" 
+			always-use-default-target="false" 
+			default-target-url="/content/project/CreateProject.xhtml" />
+		 
+		<security:logout logout-success-url="/login/Login.xhtml" 
+		invalidate-session="true" />
+		
+		<security:remember-me key="SeguridadRMKey" user-service-ref="userDetailsService" />
+	</security:http>
+	
+	<security:authentication-manager alias="authenticationManager" >
+	<security:authentication-provider user-service-ref='userDetailsService' >
+		<security:password-encoder hash="plaintext"/>
+	</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<bean id="userDetailsService" class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+		<property name="rolePrefix" value="ROLE_" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="usersByUsernameQuery" value="SELECT username,password,enabled FROM Users WHERE username = ?" />
+		<property name="authoritiesByUsernameQuery" value="SELECT u.username, a.authorityname FROM Users u JOIN Users_Authorities ua on u.id = ua.user_id JOIN Authorities a on ua.authorities_id = a.id WHERE u.username = ?" />
+	</bean>
+	
+	<bean id="ResolutionDAO" class="com.rentix.dao.ResolutionDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="MaterialDAO" class="com.rentix.dao.MaterialDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ProyectoDAO" class="com.rentix.dao.ProyectoDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	
+	<bean id="ProjectService" class="com.rentix.service.ServiceProjectImpl">
+		<property name="proyectoDAO">
+			<ref bean="ProyectoDAO"/>
+		</property>
+		<property name="userDAO">
+			<ref bean="UsersDAO"/>
+		</property>
+	</bean>
+	
+	<bean id="AuthenticationService" class="com.rentix.service.AuthenticationServiceImpl">
+		<property name="userDAO">
+			<ref bean="UsersDAO"/>
+		</property>
+	</bean>
+	
+	<bean id="UsersDAO" class="com.rentix.dao.UsersDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AuthoritiesDAO" class="com.rentix.dao.AuthoritiesDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="SceneDAO" class="com.rentix.dao.SceneDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="ObjDAO" class="com.rentix.dao.ObjDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="FileDAO" class="com.rentix.dao.FileDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="StatusDAO" class="com.rentix.dao.StatusDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="AccelerationDAO"
+		class="com.rentix.dao.AccelerationDAO">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+		
+	</bean>
+<!-- 
+<bean id="log4jInitializer" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+   <property name="staticMethod" value="org.springframework.util.Log4jConfigurer.initLogging" />
+   <property name="arguments">
+      <list>
+         <value>classpath:conf/log4j.properties</value>
+      </list>
+   </property>
+</bean> -->
+
+</beans>

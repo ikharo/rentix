@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:icecore="http://www.icefaces.org/icefaces/core"
+    xmlns:ace="http://www.icefaces.org/icefaces/components"
+    xmlns:ice="http://www.icesoft.com/icefaces/component">
+    
+
+	<h:body>
+       		<ui:composition template="/template/common/commonLayout.xhtml">
+			<ui:define name="content">
+		        <h:form>
+					<div class="wrapper col5">
+				<div id="container">
+					<div id="contentIn">
+						<ice:outputText><h2>Escena</h2></ice:outputText>
+						<ice:panelGroup>
+						<ice:panelGrid columns="2">
+							<ice:outputLabel  value="Proyecto: " />
+							<ice:outputLabel  value="Nombre de escena: " />
+							<ice:outputLabel  value="#{projectMB.scene.name}" />
+							<ice:outputLabel  value="Estado: " />
+							<ice:outputLabel  value="#{projectMB.scene.status}" />
+							<ice:outputLabel  value="Archivo: " />
+							<ice:outputLabel  value="#{projectMB.scene.file(0)}" />
+							<ice:outputLabel  value="Posición de camara: " />
+							<ice:outputLabel  value="#{projectMB.scene.cameraPos}" />
+							<ice:outputLabel  value="Resolusión: " />
+							<ice:outputLabel  value="#{projectMB.scene.resolution}" />
+							<ice:outputLabel  value="No. vertices " />
+							<ice:outputLabel  value="#{projectMB.scene.numVertices}" />
+							<ice:outputLabel  value="No. normales " />
+							<ice:outputLabel  value="#{projectMB.scene.numNormals}" />
+							<ice:outputLabel  value="No. texcoords " />
+							<ice:outputLabel  value="#{projectMB.scene.numTexcoords}" />
+							<ice:outputLabel  value="No. facetnorms" />
+							<ice:outputLabel  value="#{projectMB.scene.numFacetnorms}" />
+							<ice:outputLabel  value="No. triangulos" />
+							<ice:outputLabel  value="#{projectMB.scene.numTriangles}" />
+							<ice:outputLabel  value="Tiempo estimado de renderizado" />
+							<ice:outputLabel  value="#{projectMB.scene.renderEstTime}" />
+							<ice:outputLabel  value="Tiempo de renderizado" />
+							<ice:outputLabel  value="#{projectMB.scene.renderTime}" />
+							<ice:outputLabel  value="Memoria estimada de renderizado" />
+							<ice:outputLabel  value="#{projectMB.scene.renderEstMem}" />
+							<ice:outputLabel  value="Memoria de renderizado" />
+							<ice:outputLabel  value="#{projectMB.scene.renderMem}" />
+							<ice:outputLabel  value="Imagen" />
+							<ice:outputLabel  value="#{projectMB.scene.file(1)}" />
+						</ice:panelGroup>
+						<ice:panelGroup id="paneldtfiles">
+									<ice:dataTable id="dtfiles" value="#{projectMB.tempScenes}" var="scene">
+										<ice:column id="escena">
+											<f:facet name="header">
+												<ice:outputLabel>Material</ice:outputLabel>
+											</f:facet>
+											<ice:selectOneMenu value="#{scene.resolution}">
+												<f:selectItems value="#{projectMB.scene.obj(0)}"  />
+											</ice:selectOneMenu>
+										</ice:column>
+										<ice:column id="resolusion">
+											<f:facet name="header">
+												<ice:outputLabel>Material</ice:outputLabel>
+											</f:facet>
+											<ice:selectOneMenu value="#{scene.resolution}">
+												<f:selectItems  value="#{projectMB.scene.material(0)}"  />
+											</ice:selectOneMenu>
+										</ice:column>
+										
+									</ice:dataTable>
+						</ice:panelGroup>
+					</div>
+					<div id="column">
+						<div class="holder">
+							<h2>RENDER FARM</h2>
+							<ul id="latestnews"><ice:outputText>Estado</ice:outputText></ul>x
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		        </h:form >
+		    </ui:define>
+		</ui:composition>
+	</h:body>
+</html>
